@@ -5,7 +5,7 @@ import Link from "next/link";
 import styles from "./page.module.css";
 
 
-function Trabajo({ imagen, video, titulo }) {
+function Trabajo({ imagen, video, titulo, vertical = false }) {
 
   const videoRef = useRef(null);
 
@@ -31,7 +31,7 @@ function Trabajo({ imagen, video, titulo }) {
       onMouseLeave={detenerVideo}
     >
 
-      <div className={styles.media}>
+      <div className={`${styles.media} ${ vertical ? styles.mediaSilla : "" }`}>
 
         {/* IMAGEN */}
         <img
@@ -89,7 +89,7 @@ export default function Portones() {
         href="/#trabajos"
         className={styles.volver}
       >
-        ← Volver a proyectos
+        ← Volver a inicio
       </Link>
 
 
@@ -141,6 +141,35 @@ export default function Portones() {
           imagen="/Porton 3.jpeg"
           video="/Porton 3 Video.mp4"
           titulo="Puerta automática"
+        />
+
+
+        <Trabajo
+          imagen="/Porton 4.jpeg"
+          video="/Porton 4 Video.mp4"
+          titulo="Puerta automática"
+        />
+
+
+        <Trabajo
+          imagen="/Porton 5.jpeg"
+          video="/Porton 5 Video.mp4"
+          titulo="Puerta automática"
+        />
+
+
+        <Trabajo
+          imagen="/Porton 6.jpeg"
+          video="/Porton 6 Video.mp4"
+          titulo="Puerta automática"
+        />
+
+
+        <Trabajo
+          imagen="/Porton deslizante 1.png"
+          video="/Porton deslizante 1 Video.mp4"
+          titulo="Puerta deslizante automática"
+          vertical={true}
         />
 
 

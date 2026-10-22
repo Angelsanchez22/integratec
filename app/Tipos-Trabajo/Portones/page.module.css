@@ -111,6 +111,20 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/*Vertical*/
+.mediaSilla {
+  position: relative;
+  overflow: hidden;
+  background: #050910;
+}
+
+.mediaSilla .imagen,
+.mediaSilla .video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  object-position: center;
+}
 
 .imagen,
 .video {

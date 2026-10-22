@@ -8,14 +8,14 @@ import {
   Settings,
   ShieldCheck,
   Wrench,
-  MessagesSquare
+  MessagesSquare,
+  Menu,
+  X
 } from "lucide-react";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
-
-
 
 function ProjectCard({
   image,
@@ -106,30 +106,35 @@ function ProjectCard({
 }
 
 export default function Home() {
+const [menuAbierto, setMenuAbierto] = useState(false);
  useEffect(() => {
-    const elements = document.querySelectorAll(
-      `.${styles.scrollAnimation}`
-    );
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add(styles.visible);
+        } else {
+          entry.target.classList.remove(styles.visible);
+        }
+      });
+    },
+    {
+      threshold: 0.15,
+    }
+  );
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add(styles.visible);
-          } else {
-            entry.target.classList.remove(styles.visible);
-          }
-        });
-      },
-      {
-        threshold: 0.15,
-      }
-    );
+  const elementos = document.querySelectorAll(
+    `.${styles.scrollAnimation}`
+  );
 
-    elements.forEach((element) => observer.observe(element));
+  elementos.forEach((elemento) => {
+    observer.observe(elemento);
+  });
 
-    return () => observer.disconnect();
-  }, []);
+  return () => {
+    observer.disconnect();
+  };
+}, []);
   
   return (
     <main>
@@ -139,13 +144,25 @@ export default function Home() {
           <img src="/Integratec.png" alt="Logo" className={styles.logoImage} />
         </div>
 
-        <div className={styles.navLinks}>
-          <a href="#inicio">Inicio</a>
-          <a href="#servicios">Servicios</a>
-          <a href="#trabajos">Trabajos</a>
-          <a href="#porque-elegirnos">Por qué elegirnos</a>
-          <a href="#redes-sociales">Redes Sociales</a>
-          <a href="#contacto">Contáctanos</a>
+        {/* Botón hamburguesa para celulares */}
+    <button
+      type="button"
+      className={styles.menuToggle}
+      onClick={() => setMenuAbierto(!menuAbierto)}
+      aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
+      aria-expanded={menuAbierto}
+      aria-controls="navigation-links"
+    >
+      {menuAbierto ? <X size={26} /> : <Menu size={26} />}
+    </button>
+
+        <div id="navigation-links" className={`${styles.navLinks} ${menuAbierto ? styles.navLinksOpen : ""}`}>
+          <a href="#inicio" onClick={() => setMenuAbierto(false)}>Inicio</a>
+          <a href="#servicios" onClick={() => setMenuAbierto(false)}>Servicios</a>
+          <a href="#trabajos" onClick={() => setMenuAbierto(false)}>Trabajos</a>
+          <a href="#porque-elegirnos" onClick={() => setMenuAbierto(false)}>Por qué elegirnos</a>
+          <a href="#redes-sociales" onClick={() => setMenuAbierto(false)}>Redes Sociales</a>
+          <a href="#contacto" onClick={() => setMenuAbierto(false)}>Contáctanos</a>
           
         </div>
       </nav>
@@ -357,6 +374,41 @@ export default function Home() {
     </div>
   </Link>
 
+
+
+  <Link
+    href="/Tipos-Trabajo/Otros"
+    className={styles.categoryCard}
+  >
+    <div className={styles.categoryImage}>
+
+      <img
+        src="/Valla de seguridad 1.png"
+        alt="Otros trabajos realizados por Integratec"
+      />
+
+      <div className={styles.categoryOverlay}>
+        <span>EXPLORAR</span>
+        <div>↗</div>
+      </div>
+
+    </div>
+
+    <div className={styles.categoryInfo}>
+
+      <span>03 / OTROS</span>
+
+      <h3>
+        Otros trabajos
+        <br />
+        realizados
+      </h3>
+
+      <p>Ver proyectos →</p>
+
+    </div>
+  </Link>
+
   </div>
 
 </section>
@@ -551,8 +603,36 @@ export default function Home() {
     </small>
 
   </div>
-
 </section>
+      
+<footer className={styles.footer}>
+  <div className={`${styles.footerTop} ${styles.scrollAnimation}`}>
+    <div>
+      <h3>
+        INTEGRATEC <span>SOLUCIONES</span>
+      </h3>
+      <p>Automatización · Seguridad · Tecnología</p>
+    </div>
+
+    <p>© {new Date().getFullYear()} Integratec Soluciones</p>
+  </div>
+
+  <div className={styles.footerBottom}>
+    <p>Todos los derechos reservados.</p>
+
+    <div className={styles.developer}>
+      <span>DESIGN & DEVELOPMENT</span>
+
+      <a
+        href="https://github.com/Angelsanchez22"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Angel David Sanchez Calle ↗
+      </a>
+    </div>
+  </div>
+</footer>
     </main>
   );
 }

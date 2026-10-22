@@ -81,7 +81,7 @@ export default function Pergolas() {
         href="/#trabajos"
         className={styles.volver}
       >
-        ← Volver a proyectos
+        ← Volver a inicio
       </Link>
 
 
